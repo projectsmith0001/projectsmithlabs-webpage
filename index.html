@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Project Smith Labs — Practical engineering, projects, kits, and mentorship for students." />
+  <meta name="theme-color" content="#050816" />
+  <title>Project Smith Labs | Learn • Build • Innovate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#050816;
+      --panel:rgba(15,23,42,.72);
+      --panel-strong:#0f172a;
+      --green:#00FF66;
+      --blue:#00BFFF;
+      --text:#fff;
+      --muted:#a7b0c0;
+      --border:rgba(255,255,255,.08);
+      --shadow:0 24px 60px rgba(0,191,255,.12);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top, rgba(0,191,255,.10), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(0,255,102,.10), transparent 25%),
+        linear-gradient(180deg,#060816 0%, #050816 100%);
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+      background-size:72px 72px;
+      opacity:.16;
+      pointer-events:none;
+      mask-image:radial-gradient(circle at center,black 40%,transparent 100%);
+    }
+    .container{width:min(1180px,92%);margin:auto}
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(18px);
+      background:rgba(5,8,22,.72);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-inner{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 0;gap:18px;
+    }
+    .logo{
+      font-size:1rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    }
+    .logo span{color:var(--green)}
+    .links{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
+    .links a{
+      color:var(--text);text-decoration:none;font-size:.92rem;opacity:.8
+    }
+    .links a:hover{color:var(--green);opacity:1}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:13px 20px;border-radius:14px;text-decoration:none;
+      font-weight:700;border:1px solid var(--border);transition:.25s ease;
+      background:rgba(255,255,255,.04);color:#fff;
+    }
+    .btn.primary{
+      border:none;color:#04111a;
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      box-shadow:0 10px 35px rgba(0,255,102,.15);
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .hero{
+      padding:96px 0 70px;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:9px 13px;border-radius:999px;
+      border:1px solid var(--border);background:rgba(255,255,255,.03);
+      color:var(--muted);font-size:.86rem;margin-bottom:20px;
+    }
+    h1{
+      margin:0;
+      font-size:clamp(3.2rem,7vw,6rem);
+      line-height:.92;
+      letter-spacing:-.05em;
+    }
+    .grad{
+      background:linear-gradient(135deg,var(--green),var(--blue));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .sub{
+      margin:18px 0 0;
+      color:var(--muted);
+      font-size:1.02rem;
+      max-width:560px;
+      line-height:1.8;
+    }
+    .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    .stats{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;
+    }
+    .stat{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+    .stat strong{display:block;font-size:1.5rem;color:var(--green);margin-bottom:6px}
+    .stat span{color:var(--muted);font-size:.92rem}
+    .art{
+      position:relative;min-height:520px;border-radius:28px;overflow:hidden;
+      border:1px solid var(--border);background:rgba(255,255,255,.02);
+      box-shadow:var(--shadow);
+    }
+    .art:before{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0,255,102,.12), transparent 18%),
+        radial-gradient(circle at 80% 25%, rgba(0,191,255,.14), transparent 16%),
+        radial-gradient(circle at 50% 70%, rgba(255,255,255,.08), transparent 20%);
+    }
+    .glass{
+      position:absolute;
+      background:rgba(15,23,42,.72);
+      border:1px solid var(--border);
+      backdrop-filter:blur(18px);
+      border-radius:24px;
+      box-shadow:0 18px 44px rgba(0,0,0,.25);
+    }
+    .g1{left:8%;top:10%;right:8%;height:250px;padding:22px}
+    .g2{left:6%;bottom:6%;width:52%;height:150px;padding:20px}
+    .g3{right:6%;bottom:10%;width:32%;height:130px;padding:20px}
+    .chip{
+      display:inline-block;padding:8px 12px;border-radius:999px;
+      color:var(--green);background:rgba(0,255,102,.10);font-size:.82rem;font-weight:700;
+    }
+    .dotline{
+      margin-top:18px;height:140px;border-radius:18px;
+      border:1px dashed rgba(255,255,255,.12);
+      background:linear-gradient(135deg,rgba(0,255,102,.06),rgba(0,191,255,.08));
+      display:flex;align-items:center;justify-content:center;
+      font-size:3rem;
+    }
+    section{padding:72px 0}
+    .title{
+      margin:0 0 8px;font-size:2rem;letter-spacing:-.03em
+    }
+    .desc{
+      margin:0 0 24px;color:var(--muted);max-width:620px;line-height:1.8
+    }
+    .grid{
+      display:grid;gap:18px;
+    }
+    .cards-4{grid-template-columns:repeat(4,1fr)}
+    .cards-3{grid-template-columns:repeat(3,1fr)}
+    .cards-5{grid-template-columns:repeat(5,1fr)}
+    .card{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:18px;
+      backdrop-filter:blur(18px);
+      transition:.25s ease;
+    }
+    .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .thumb{
+      height:160px;border-radius:18px;margin-bottom:16px;
+      background:linear-gradient(135deg,rgba(0,255,102,.12),rgba(0,191,255,.12));
+      border:1px solid rgba(255,255,255,.08);
+      display:flex;align-items:center;justify-content:center;
+      font-size:2.6rem;
+    }
+    .card h3{margin:0 0 8px;font-size:1.05rem}
+    .card p{margin:0;color:var(--muted);line-height:1.65;font-size:.95rem}
+    .meta{display:flex;justify-content:space-between;gap:10px;margin:14px 0 16px;color:var(--muted);font-size:.9rem}
+    .price{color:var(--green);font-weight:800}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .feature{
+      padding:22px;border-radius:20px;background:rgba(255,255,255,.03);
+      border:1px solid var(--border)
+    }
+    .feature strong{display:block;margin-top:8px}
+    .feature p{margin:8px 0 0;color:var(--muted);line-height:1.7}
+    .testimonial{min-height:190px}
+    .stars{color:#ffd166;letter-spacing:2px}
+    .contact{
+      display:grid;grid-template-columns:1.05fr .95fr;gap:22px
+    }
+    .form{display:grid;gap:12px}
+    .input{
+      width:100%;padding:14px 16px;border-radius:14px;
+      border:1px solid var(--border);background:rgba(255,255,255,.03);
+      color:#fff;outline:none;font-family:inherit
+    }
+    .input::placeholder{color:#7f8aa3}
+    .footer{
+      padding:26px 0;border-top:1px solid var(--border);color:var(--muted)
+    }
+    .footer-inner{
+      display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center
+    }
+    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
+    .footer-links a{color:var(--muted);text-decoration:none}
+    .footer-links a:hover{color:#fff}
+    @media (max-width: 980px){
+      .hero-grid,.contact{grid-template-columns:1fr}
+      .cards-4,.cards-3,.cards-5,.features,.stats{grid-template-columns:repeat(2,1fr)}
+      .art{min-height:420px}
+    }
+    @media (max-width: 640px){
+      .links{display:none}
+      .cards-4,.cards-3,.cards-5,.features,.stats{grid-template-columns:1fr}
+      .hero{padding-top:78px}
+      h1{font-size:3rem}
+      .cta{flex-direction:column}
+      .btn{width:100%}
+      .nav-inner{padding:14px 0}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <div class="logo">PROJECT <span>SMITH LABS</span></div>
+      <nav class="links">
+        <a href="#courses">Courses</a>
+        <a href="#projects">Projects</a>
+        <a href="#kits">Kits</a>
+        <a href="#resources">Resources</a>
+        <a href="#community">Community</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn primary" href="#contact">WhatsApp</a>
+    </div>
+  </header>
+
+  <main class="hero container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Instagram-inspired • Dark • Premium</div>
+        <h1>Build.<br><span class="grad">Learn.</span><br>Innovate.</h1>
+        <p class="sub">Practical engineering for students.</p>
+        <div class="cta">
+          <a class="btn primary" href="#courses">Explore</a>
+          <a class="btn" href="#community">Join Community</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>500+</strong><span>Projects</span></div>
+          <div class="stat"><strong>100+</strong><span>Students</span></div>
+          <div class="stat"><strong>20+</strong><span>Categories</span></div>
+          <div class="stat"><strong>24/7</strong><span>Support</span></div>
+        </div>
+      </div>
+
+      <div class="art">
+        <div class="glass g1">
+          <div class="chip">Live Lab</div>
+          <div class="dotline">⚡🤖</div>
+        </div>
+        <div class="glass g2">
+          <strong>Projects</strong>
+          <p style="color:var(--muted);margin:8px 0 0">Hardware builds. Clean docs. Fast support.</p>
+        </div>
+        <div class="glass g3">
+          <strong>Brand</strong>
+          <p style="color:var(--muted);margin:8px 0 0">projectsmithlabs.in</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <section id="courses">
+    <div class="container">
+      <h2 class="title">Courses</h2>
+      <p class="desc">Short, premium learning paths.</p>
+      <div class="grid cards-4">
+        <article class="card">
+          <div class="thumb">🟩</div>
+          <h3>Arduino</h3>
+          <p>Beginner to advanced.</p>
+          <div class="meta"><span>6 Weeks</span><span class="price">₹999</span></div>
+          <a class="btn primary" href="#contact">Enroll</a>
+        </article>
+        <article class="card">
+          <div class="thumb">📶</div>
+          <h3>ESP32 & IoT</h3>
+          <p>Connected devices.</p>
+          <div class="meta"><span>8 Weeks</span><span class="price">₹1499</span></div>
+          <a class="btn primary" href="#contact">Enroll</a>
+        </article>
+        <article class="card">
+          <div class="thumb">🤖</div>
+          <h3>Robotics</h3>
+          <p>Motors and sensors.</p>
+          <div class="meta"><span>7 Weeks</span><span class="price">₹1299</span></div>
+          <a class="btn primary" href="#contact">Enroll</a>
+        </article>
+        <article class="card">
+          <div class="thumb">🧠</div>
+          <h3>AI + Embedded</h3>
+          <p>Future-ready skills.</p>
+          <div class="meta"><span>10 Weeks</span><span class="price">₹1999</span></div>
+          <a class="btn primary" href="#contact">Enroll</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="title">Projects</h2>
+      <p class="desc">Popular student builds.</p>
+      <div class="grid cards-4">
+        <article class="card"><div class="thumb">💧</div><h3>Water Level</h3><p>Sensor-based monitoring.</p><a class="btn primary" href="#contact">Buy Now</a></article>
+        <article class="card"><div class="thumb">🔦</div><h3>Laser Security</h3><p>Simple perimeter safety.</p><a class="btn primary" href="#contact">Buy Now</a></article>
+        <article class="card"><div class="thumb">🏠</div><h3>RFID Lock</h3><p>Access control system.</p><a class="btn primary" href="#contact">Buy Now</a></article>
+        <article class="card"><div class="thumb">🌱</div><h3>Smart Irrigation</h3><p>Automated watering.</p><a class="btn primary" href="#contact">Buy Now</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="kits">
+    <div class="container">
+      <h2 class="title">Kits</h2>
+      <p class="desc">Starter packs for hands-on learning.</p>
+      <div class="grid cards-4">
+        <article class="card"><div class="thumb">🧰</div><h3>Arduino Kit</h3><p>Core components.</p><div class="meta"><span>Starter</span><span class="price">₹799</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
+        <article class="card"><div class="thumb">📡</div><h3>ESP32 Kit</h3><p>Wi-Fi projects.</p><div class="meta"><span>IoT</span><span class="price">₹1299</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
+        <article class="card"><div class="thumb">🚗</div><h3>Robotics Kit</h3><p>Build and test.</p><div class="meta"><span>Advanced</span><span class="price">₹1599</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
+        <article class="card"><div class="thumb">🔍</div><h3>Sensor Kit</h3><p>Learn modules fast.</p><div class="meta"><span>Multi-sensor</span><span class="price">₹999</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="title">Why Us</h2>
+      <p class="desc">Built for serious learners.</p>
+      <div class="features">
+        <div class="feature"><strong>Practical</strong><p>Learn by building.</p></div>
+        <div class="feature"><strong>Premium</strong><p>Clean, polished delivery.</p></div>
+        <div class="feature"><strong>Supported</strong><p>WhatsApp help.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="resources">
+    <div class="container">
+      <h2 class="title">Resources</h2>
+      <p class="desc">Free downloads.</p>
+      <div class="grid cards-5">
+        <article class="card"><h3>Arduino Notes</h3><a class="btn primary" href="#contact">Download</a></article>
+        <article class="card"><h3>ESP32 Notes</h3><a class="btn primary" href="#contact">Download</a></article>
+        <article class="card"><h3>Reports</h3><a class="btn primary" href="#contact">Download</a></article>
+        <article class="card"><h3>Diagrams</h3><a class="btn primary" href="#contact">Download</a></article>
+        <article class="card"><h3>Questions</h3><a class="btn primary" href="#contact">Download</a></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="community">
+    <div class="container">
+      <h2 class="title">Community</h2>
+      <p class="desc">Instagram. WhatsApp. YouTube. Discord.</p>
+      <div class="grid cards-4">
+        <article class="card"><h3>Instagram</h3><p>@project_smith_</p></article>
+        <article class="card"><h3>WhatsApp</h3><p>Daily support</p></article>
+        <article class="card"><h3>YouTube</h3><p>Build videos</p></article>
+        <article class="card"><h3>Discord</h3><p>Coming soon</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container contact">
+      <div>
+        <h2 class="title">Contact</h2>
+        <p class="desc">hello@projectsmithlabs.in</p>
+        <div class="grid cards-3">
+          <div class="card"><strong>WhatsApp</strong><p style="color:var(--muted);margin-top:8px">Fast replies</p></div>
+          <div class="card"><strong>Email</strong><p style="color:var(--muted);margin-top:8px">hello@projectsmithlabs.in</p></div>
+          <div class="card"><strong>Instagram</strong><p style="color:var(--muted);margin-top:8px">@project_smith_</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <form class="form">
+          <input class="input" type="text" placeholder="Name" />
+          <input class="input" type="email" placeholder="Email" />
+          <input class="input" type="tel" placeholder="Phone" />
+          <textarea class="input" rows="5" placeholder="Message"></textarea>
+          <button class="btn primary" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong style="color:#fff;letter-spacing:.12em">PROJECT SMITH LABS</strong>
+        <div>Learn • Build • Innovate</div>
+      </div>
+      <div class="footer-links">
+        <a href="#courses">Courses</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
