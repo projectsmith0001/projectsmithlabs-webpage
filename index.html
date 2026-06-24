@@ -1,425 +1,1122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Project Smith Labs — Practical engineering, projects, kits, and mentorship for students." />
-  <meta name="theme-color" content="#050816" />
-  <title>Project Smith Labs | Learn • Build • Innovate</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#050816;
-      --panel:rgba(15,23,42,.72);
-      --panel-strong:#0f172a;
-      --green:#00FF66;
-      --blue:#00BFFF;
-      --text:#fff;
-      --muted:#a7b0c0;
-      --border:rgba(255,255,255,.08);
-      --shadow:0 24px 60px rgba(0,191,255,.12);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(0,191,255,.10), transparent 28%),
-        radial-gradient(circle at 80% 0%, rgba(0,255,102,.10), transparent 25%),
-        linear-gradient(180deg,#060816 0%, #050816 100%);
-      overflow-x:hidden;
-    }
-    body:before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
-      background-size:72px 72px;
-      opacity:.16;
-      pointer-events:none;
-      mask-image:radial-gradient(circle at center,black 40%,transparent 100%);
-    }
-    .container{width:min(1180px,92%);margin:auto}
-    .nav{
-      position:sticky;top:0;z-index:50;
-      backdrop-filter:blur(18px);
-      background:rgba(5,8,22,.72);
-      border-bottom:1px solid var(--border);
-    }
-    .nav-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:18px 0;gap:18px;
-    }
-    .logo{
-      font-size:1rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-    }
-    .logo span{color:var(--green)}
-    .links{display:flex;gap:20px;flex-wrap:wrap;justify-content:center}
-    .links a{
-      color:var(--text);text-decoration:none;font-size:.92rem;opacity:.8
-    }
-    .links a:hover{color:var(--green);opacity:1}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:13px 20px;border-radius:14px;text-decoration:none;
-      font-weight:700;border:1px solid var(--border);transition:.25s ease;
-      background:rgba(255,255,255,.04);color:#fff;
-    }
-    .btn.primary{
-      border:none;color:#04111a;
-      background:linear-gradient(135deg,var(--green),var(--blue));
-      box-shadow:0 10px 35px rgba(0,255,102,.15);
-    }
-    .btn:hover{transform:translateY(-2px)}
-    .hero{
-      padding:96px 0 70px;
-    }
-    .hero-grid{
-      display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center;
-    }
-    .eyebrow{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:9px 13px;border-radius:999px;
-      border:1px solid var(--border);background:rgba(255,255,255,.03);
-      color:var(--muted);font-size:.86rem;margin-bottom:20px;
-    }
-    h1{
-      margin:0;
-      font-size:clamp(3.2rem,7vw,6rem);
-      line-height:.92;
-      letter-spacing:-.05em;
-    }
-    .grad{
-      background:linear-gradient(135deg,var(--green),var(--blue));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-    .sub{
-      margin:18px 0 0;
-      color:var(--muted);
-      font-size:1.02rem;
-      max-width:560px;
-      line-height:1.8;
-    }
-    .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
-    .stats{
-      display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:34px;
-    }
-    .stat{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:20px;
-      padding:20px;
-      box-shadow:var(--shadow);
-    }
-    .stat strong{display:block;font-size:1.5rem;color:var(--green);margin-bottom:6px}
-    .stat span{color:var(--muted);font-size:.92rem}
-    .art{
-      position:relative;min-height:520px;border-radius:28px;overflow:hidden;
-      border:1px solid var(--border);background:rgba(255,255,255,.02);
-      box-shadow:var(--shadow);
-    }
-    .art:before{
-      content:"";position:absolute;inset:0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,255,102,.12), transparent 18%),
-        radial-gradient(circle at 80% 25%, rgba(0,191,255,.14), transparent 16%),
-        radial-gradient(circle at 50% 70%, rgba(255,255,255,.08), transparent 20%);
-    }
-    .glass{
-      position:absolute;
-      background:rgba(15,23,42,.72);
-      border:1px solid var(--border);
-      backdrop-filter:blur(18px);
-      border-radius:24px;
-      box-shadow:0 18px 44px rgba(0,0,0,.25);
-    }
-    .g1{left:8%;top:10%;right:8%;height:250px;padding:22px}
-    .g2{left:6%;bottom:6%;width:52%;height:150px;padding:20px}
-    .g3{right:6%;bottom:10%;width:32%;height:130px;padding:20px}
-    .chip{
-      display:inline-block;padding:8px 12px;border-radius:999px;
-      color:var(--green);background:rgba(0,255,102,.10);font-size:.82rem;font-weight:700;
-    }
-    .dotline{
-      margin-top:18px;height:140px;border-radius:18px;
-      border:1px dashed rgba(255,255,255,.12);
-      background:linear-gradient(135deg,rgba(0,255,102,.06),rgba(0,191,255,.08));
-      display:flex;align-items:center;justify-content:center;
-      font-size:3rem;
-    }
-    section{padding:72px 0}
-    .title{
-      margin:0 0 8px;font-size:2rem;letter-spacing:-.03em
-    }
-    .desc{
-      margin:0 0 24px;color:var(--muted);max-width:620px;line-height:1.8
-    }
-    .grid{
-      display:grid;gap:18px;
-    }
-    .cards-4{grid-template-columns:repeat(4,1fr)}
-    .cards-3{grid-template-columns:repeat(3,1fr)}
-    .cards-5{grid-template-columns:repeat(5,1fr)}
-    .card{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:22px;
-      padding:18px;
-      backdrop-filter:blur(18px);
-      transition:.25s ease;
-    }
-    .card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
-    .thumb{
-      height:160px;border-radius:18px;margin-bottom:16px;
-      background:linear-gradient(135deg,rgba(0,255,102,.12),rgba(0,191,255,.12));
-      border:1px solid rgba(255,255,255,.08);
-      display:flex;align-items:center;justify-content:center;
-      font-size:2.6rem;
-    }
-    .card h3{margin:0 0 8px;font-size:1.05rem}
-    .card p{margin:0;color:var(--muted);line-height:1.65;font-size:.95rem}
-    .meta{display:flex;justify-content:space-between;gap:10px;margin:14px 0 16px;color:var(--muted);font-size:.9rem}
-    .price{color:var(--green);font-weight:800}
-    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    .feature{
-      padding:22px;border-radius:20px;background:rgba(255,255,255,.03);
-      border:1px solid var(--border)
-    }
-    .feature strong{display:block;margin-top:8px}
-    .feature p{margin:8px 0 0;color:var(--muted);line-height:1.7}
-    .testimonial{min-height:190px}
-    .stars{color:#ffd166;letter-spacing:2px}
-    .contact{
-      display:grid;grid-template-columns:1.05fr .95fr;gap:22px
-    }
-    .form{display:grid;gap:12px}
-    .input{
-      width:100%;padding:14px 16px;border-radius:14px;
-      border:1px solid var(--border);background:rgba(255,255,255,.03);
-      color:#fff;outline:none;font-family:inherit
-    }
-    .input::placeholder{color:#7f8aa3}
-    .footer{
-      padding:26px 0;border-top:1px solid var(--border);color:var(--muted)
-    }
-    .footer-inner{
-      display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center
-    }
-    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
-    .footer-links a{color:var(--muted);text-decoration:none}
-    .footer-links a:hover{color:#fff}
-    @media (max-width: 980px){
-      .hero-grid,.contact{grid-template-columns:1fr}
-      .cards-4,.cards-3,.cards-5,.features,.stats{grid-template-columns:repeat(2,1fr)}
-      .art{min-height:420px}
-    }
-    @media (max-width: 640px){
-      .links{display:none}
-      .cards-4,.cards-3,.cards-5,.features,.stats{grid-template-columns:1fr}
-      .hero{padding-top:78px}
-      h1{font-size:3rem}
-      .cta{flex-direction:column}
-      .btn{width:100%}
-      .nav-inner{padding:14px 0}
-    }
-  </style>
-</head>
-<body>
-  <header class="nav">
-    <div class="container nav-inner">
-      <div class="logo">PROJECT <span>SMITH LABS</span></div>
-      <nav class="links">
-        <a href="#courses">Courses</a>
-        <a href="#projects">Projects</a>
-        <a href="#kits">Kits</a>
-        <a href="#resources">Resources</a>
-        <a href="#community">Community</a>
-        <a href="#contact">Contact</a>
+import { useState, useEffect, useRef, useCallback } from "react";
+
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════════════════ */
+const T = {
+  bg: "#050816",
+  surface: "#0A1628",
+  card: "#0D1F3C",
+  border: "rgba(0,255,102,0.12)",
+  borderBlue: "rgba(0,191,255,0.12)",
+  green: "#00FF66",
+  blue: "#00BFFF",
+  purple: "#8B5CF6",
+  amber: "#F59E0B",
+  pink: "#EC4899",
+  white: "#F1F5F9",
+  muted: "#64748B",
+  subtle: "#1E3A5F",
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL STYLES
+═══════════════════════════════════════════════════════════════ */
+const GLOBAL_CSS = `
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #050816; color: #F1F5F9; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+  ::selection { background: rgba(0,255,102,0.25); }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: #050816; }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,102,0.3); border-radius: 10px; }
+
+  @keyframes floatY { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-14px)} }
+  @keyframes floatX { 0%,100%{transform:translateX(0px)} 50%{transform:translateX(-8px)} }
+  @keyframes pulse-glow { 0%,100%{opacity:0.5;box-shadow:0 0 12px rgba(0,255,102,0.3)} 50%{opacity:1;box-shadow:0 0 28px rgba(0,255,102,0.6)} }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  @keyframes spin-slow { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes trace { 0%{stroke-dashoffset:1000} 100%{stroke-dashoffset:0} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+  @keyframes shimmer { 0%{background-position:-400px 0} 100%{background-position:400px 0} }
+
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .nav-link { background:none; border:none; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:0.875rem; font-weight:500; color:#94A3B8; padding:6px 0; transition:color 0.2s; letter-spacing:0.01em; }
+  .nav-link:hover, .nav-link.active { color:#00FF66; }
+  .nav-link.active { position:relative; }
+  .nav-link.active::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px; background:#00FF66; border-radius:2px; }
+
+  @media(max-width:900px){ .hide-mobile{display:none!important} }
+  @media(min-width:901px){ .hide-desktop{display:none!important} }
+`;
+
+/* ═══════════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════════ */
+const PAGES = ["Home","Courses","Projects","Kits","Resources","About","Contact"];
+
+const STATS = [
+  { n:"500+", label:"Projects Delivered", icon:"🏗️" },
+  { n:"1,200+", label:"Students Trained", icon:"🎓" },
+  { n:"20+", label:"Project Categories", icon:"📂" },
+  { n:"24/7", label:"WhatsApp Support", icon:"💬" },
+];
+
+const COURSES = [
+  { id:1, title:"Arduino Mastery", tag:"MOST POPULAR", emoji:"⚡", accent:T.green,
+    duration:"8 Weeks", level:"Beginner → Advanced", price:"₹1,499", students:342,
+    topics:["GPIO & Sensors","Serial Communication","Motor Control","LCD & OLED","Final Project"],
+    desc:"Go from blinking your first LED to building a full automation system. Project-first approach." },
+  { id:2, title:"ESP32 & IoT Engineering", tag:"TRENDING", emoji:"📡", accent:T.blue,
+    duration:"6 Weeks", level:"Intermediate", price:"₹1,799", students:218,
+    topics:["WiFi & Bluetooth","MQTT Protocol","Cloud Dashboard","Mobile App Control","Smart Home"],
+    desc:"Build connected smart devices that push data to the cloud and respond to phone commands." },
+  { id:3, title:"Robotics Fundamentals", tag:"HANDS-ON", emoji:"🤖", accent:T.purple,
+    duration:"10 Weeks", level:"Beginner", price:"₹2,199", students:156,
+    topics:["DC & Servo Motors","H-Bridge Driver","Line Following","Ultrasonic Ranging","Arm Robot"],
+    desc:"Build real robots from scratch. Every concept is demonstrated on actual hardware." },
+  { id:4, title:"AI + Embedded Systems", tag:"ADVANCED", emoji:"🧠", accent:T.amber,
+    duration:"12 Weeks", level:"Advanced", price:"₹2,999", students:89,
+    topics:["TinyML on Arduino","Edge Impulse","Gesture Recognition","Face Detection","Deployment"],
+    desc:"Run machine learning models on microcontrollers. The future of embedded engineering." },
+];
+
+const PROJECTS = [
+  { title:"Water Level Indicator", tag:"Arduino + Sensor", price:"₹349", emoji:"💧", color:T.blue },
+  { title:"Laser Security System", tag:"Arduino + IR", price:"₹499", emoji:"🔴", color:T.pink },
+  { title:"RFID Door Lock", tag:"RFID + ESP32", price:"₹599", emoji:"🔑", color:T.green },
+  { title:"Smart Irrigation", tag:"IoT + Soil Sensor", price:"₹699", emoji:"🌿", color:T.green },
+  { title:"LiFi Communication", tag:"Optical Wireless", price:"₹549", emoji:"💡", color:T.amber },
+  { title:"Obstacle Avoiding Robot", tag:"Ultrasonic + L298N", price:"₹799", emoji:"🚗", color:T.purple },
+  { title:"Smart Blind Stick", tag:"Ultrasonic + Buzzer", price:"₹399", emoji:"🦯", color:T.blue },
+  { title:"Weather Station", tag:"ESP32 + DHT22", price:"₹649", emoji:"🌦️", color:T.amber },
+  { title:"Voice Controlled LED", tag:"Bluetooth + Android", price:"₹299", emoji:"🎙️", color:T.pink },
+  { title:"GPS Tracker", tag:"GPS + GSM Module", price:"₹899", emoji:"📍", color:T.green },
+  { title:"Fingerprint Lock", tag:"R307 Sensor", price:"₹749", emoji:"👆", color:T.purple },
+  { title:"Plant Monitor", tag:"ESP32 + App", price:"₹599", emoji:"🪴", color:T.green },
+];
+
+const KITS = [
+  { title:"Arduino Starter Kit", price:"₹799", badge:"BESTSELLER", emoji:"🔧", accent:T.green,
+    img_label:"Arduino Uno + Components",
+    features:["Arduino Uno R3 (Original)","Breadboard 830 Points","40 Jumper Wires","10+ Sensors Pack","LED & Resistor Kit","Project Booklet (30 Projects)"] },
+  { title:"ESP32 IoT Developer Kit", price:"₹1,199", badge:"NEW", emoji:"📶", accent:T.blue,
+    img_label:"ESP32 DevKit + Modules",
+    features:["ESP32 DevKit v1","OLED 0.96\" Display","DHT22 + BMP280","Relay 4-Channel","USB to TTL Module","Cloud Setup Guide"] },
+  { title:"Robotics Builder Kit", price:"₹1,499", badge:"COMPETITION READY", emoji:"⚙️", accent:T.purple,
+    img_label:"4WD Chassis + Motors",
+    features:["4WD Metal Chassis","4× DC Gear Motors","L298N Motor Driver","HC-SR04 Ultrasonic","IR Sensor Array (5)","Assembly Manual"] },
+  { title:"Sensor Exploration Kit", price:"₹599", badge:"STUDENT PICK", emoji:"🔬", accent:T.amber,
+    img_label:"15 Sensors + Arduino Nano",
+    features:["Arduino Nano","15 Different Sensors","Individual Datasheets","Sample Code Library","Experiment Guide","Storage Case"] },
+];
+
+const TESTIMONIALS = [
+  { name:"Arjun Sharma", college:"DTU Delhi", course:"Arduino Mastery", rating:5,
+    text:"Submitted my final year project in under a week. The documentation was so thorough my professor assumed I had external guidance." },
+  { name:"Priya Patel", college:"SVNIT Surat", course:"ESP32 & IoT", rating:5,
+    text:"Built a working smart-home dashboard as my mini project. Got an A+ and my HOD asked me to demo it in the next seminar." },
+  { name:"Rahul Singh", college:"NIT Warangal", course:"Robotics", rating:5,
+    text:"Used the obstacle-avoiding robot kit for our inter-college competition. We placed first. The build quality is genuinely impressive." },
+  { name:"Sneha Rao", college:"VIT Vellore", course:"AI + Embedded", rating:5,
+    text:"Running TinyML on an Arduino felt impossible before this course. Now I can explain it to my seniors. Brilliant curriculum." },
+  { name:"Karan Mehta", college:"Pune University", course:"Arduino Mastery", rating:4,
+    text:"Zero electronics background to a working project in 2 weeks. The WhatsApp support fills every gap the videos leave." },
+  { name:"Ananya Iyer", college:"BITS Hyderabad", course:"ESP32 & IoT", rating:5,
+    text:"They replied to my doubt at 11:30 PM. Actual humans, actual answers. That level of support is rare even in paid bootcamps." },
+];
+
+const RESOURCES = [
+  { title:"Arduino Complete Notes", sub:"From basics to interrupts", size:"2.4 MB", type:"PDF", emoji:"📘", color:T.green },
+  { title:"ESP32 Beginner Guide", sub:"WiFi, BT, MQTT & more", size:"1.8 MB", type:"PDF", emoji:"📗", color:T.blue },
+  { title:"Project Report Templates", sub:"Formatted for BTech submission", size:"0.9 MB", type:"DOCX", emoji:"📄", color:T.purple },
+  { title:"Circuit Diagram Library", sub:"50+ ready-to-use schematics", size:"3.1 MB", type:"ZIP", emoji:"🔌", color:T.amber },
+  { title:"Interview Questions Bank", sub:"Electronics + Embedded Systems", size:"1.2 MB", type:"PDF", emoji:"❓", color:T.pink },
+  { title:"Sensor Datasheet Pack", sub:"All sensors, all pinouts", size:"4.5 MB", type:"ZIP", emoji:"📊", color:T.blue },
+];
+
+const WHY = [
+  { icon:"🎯", title:"Project-First Learning", body:"Every concept is taught by building something real. No death by PowerPoint." },
+  { icon:"📋", title:"Submit-Ready Documentation", body:"Complete reports, schematics, code comments — formatted to college standards." },
+  { icon:"🎬", title:"Step-by-Step Videos", body:"Every project has a companion video. Get unstuck without waiting for support." },
+  { icon:"💬", title:"WhatsApp Support", body:"Real engineers answer your doubts. Usually within 30 minutes, day or night." },
+  { icon:"📦", title:"Curated Hardware Kits", body:"We test every component. No counterfeit sensors, no mystery modules." },
+  { icon:"🏭", title:"Industry-Ready Skills", body:"The same tools used in R&D labs — learn them before your placement interviews." },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   REUSABLE ATOMS
+═══════════════════════════════════════════════════════════════ */
+
+// PCB-inspired image placeholder
+function ImgPlaceholder({ label, aspect = "56.25%", accent = T.green, emoji = "📷" }) {
+  return (
+    <div style={{ position: "relative", paddingTop: aspect, background: `linear-gradient(135deg, #0A1628 0%, #0D1F3C 100%)`, borderRadius: 12, overflow: "hidden", border: `1px solid ${accent}22` }}>
+      {/* PCB grid */}
+      <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", opacity:0.15 }} viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice">
+        {[0,20,40,60,80,100,120].map(y=><line key={y} x1="0" y1={y} x2="200" y2={y} stroke={accent} strokeWidth="0.4"/>)}
+        {[0,20,40,60,80,100,120,140,160,180,200].map(x=><line key={x} x1={x} y1="0" x2={x} y2="120" stroke={accent} strokeWidth="0.4"/>)}
+        {[[20,20],[60,40],[100,20],[140,60],[180,40],[40,80],[80,60],[120,80],[160,100]].map(([x,y],i)=>(
+          <circle key={i} cx={x} cy={y} r="3" fill={accent} opacity="0.6"/>
+        ))}
+        <path d="M20,20 L60,20 L60,40 L100,40 L100,60 L140,60 L140,80 L180,80" stroke={accent} strokeWidth="1" fill="none" opacity="0.4"/>
+        <path d="M40,80 L40,60 L80,60 L80,40 L120,40 L120,20 L160,20" stroke={T.blue} strokeWidth="1" fill="none" opacity="0.3"/>
+      </svg>
+      {/* Corner brackets */}
+      <svg style={{ position:"absolute", inset:0, width:"100%", height:"100%", opacity:0.5 }} viewBox="0 0 200 120" preserveAspectRatio="xMidYMid slice">
+        <path d="M8,20 L8,8 L20,8" stroke={accent} strokeWidth="1.5" fill="none"/>
+        <path d="M192,20 L192,8 L180,8" stroke={accent} strokeWidth="1.5" fill="none"/>
+        <path d="M8,100 L8,112 L20,112" stroke={accent} strokeWidth="1.5" fill="none"/>
+        <path d="M192,100 L192,112 L180,112" stroke={accent} strokeWidth="1.5" fill="none"/>
+      </svg>
+      {/* Center content */}
+      <div style={{ position:"absolute", inset:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", gap:8 }}>
+        <span style={{ fontSize:"2rem", filter:"grayscale(0.3)" }}>{emoji}</span>
+        <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.65rem", color:accent, letterSpacing:"0.1em", textAlign:"center", padding:"0 12px" }}>{label}</span>
+        <div style={{ width:40, height:2, background:`linear-gradient(90deg,transparent,${accent},transparent)`, borderRadius:2 }}/>
+      </div>
+    </div>
+  );
+}
+
+// Neon pill badge
+function Badge({ text, color = T.green }) {
+  return (
+    <span style={{ display:"inline-block", background:`${color}15`, border:`1px solid ${color}40`, color, borderRadius:100, padding:"3px 12px", fontSize:"0.68rem", fontWeight:600, fontFamily:"'JetBrains Mono',monospace", letterSpacing:"0.08em" }}>
+      {text}
+    </span>
+  );
+}
+
+// Stars
+function Stars({ n }) {
+  return <span>{Array.from({length:5},(_,i)=><span key={i} style={{color:i<n?T.amber:"#1E3A5F",fontSize:"0.85rem"}}>★</span>)}</span>;
+}
+
+// Section eyebrow + title
+function SectionHead({ eyebrow, title, sub, align="center" }) {
+  return (
+    <div style={{ textAlign:align, marginBottom:"3rem" }}>
+      {eyebrow && (
+        <div style={{ display:"inline-flex", alignItems:"center", gap:8, marginBottom:16 }}>
+          <div style={{ width:20, height:1, background:T.green }}/>
+          <span style={{ fontFamily:"'JetBrains Mono',monospace", fontSize:"0.7rem", color:T.green, letterSpacing:"0.2em", textTransform:"uppercase" }}>{eyebrow}</span>
+          <div style={{ width:20, height:1, background:T.green }}/>
+        </div>
+      )}
+      <h2 style={{ fontFamily:"'Syne',sans-serif", fontSize:"clamp(1.8rem,4vw,2.8rem)", fontWeight:800, color:T.white, lineHeight:1.1, marginBottom:sub?14:0 }}>{title}</h2>
+      {sub && <p style={{ color:T.muted, maxWidth:560, margin:"0 auto", lineHeight:1.8, fontSize:"0.95rem" }}>{sub}</p>}
+    </div>
+  );
+}
+
+// Glass card with hover glow
+function Card({ children, style={}, accent=T.green, onClick }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <div onClick={onClick}
+      onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
+      style={{
+        background: hov ? `linear-gradient(135deg,#0D1F3C,#0A1628)` : "#0A1628",
+        border:`1px solid ${hov ? accent+"55" : "rgba(255,255,255,0.06)"}`,
+        borderRadius:16, backdropFilter:"blur(16px)",
+        boxShadow: hov ? `0 0 32px ${accent}22, 0 12px 40px rgba(0,0,0,0.5)` : "0 4px 24px rgba(0,0,0,0.4)",
+        transition:"all 0.3s cubic-bezier(0.4,0,0.2,1)",
+        transform: hov ? "translateY(-5px)" : "translateY(0)",
+        cursor: onClick ? "pointer" : "default",
+        ...style,
+      }}>
+      {children}
+    </div>
+  );
+}
+
+// Primary / ghost button
+function Btn({ children, variant="primary", accent=T.green, onClick, style={}, small=false }) {
+  const [hov, setHov] = useState(false);
+  const base = {
+    display:"inline-flex", alignItems:"center", justifyContent:"center", gap:8,
+    padding: small ? "8px 18px" : "12px 28px",
+    fontSize: small ? "0.8rem" : "0.875rem",
+    fontWeight:600, cursor:"pointer", border:"none",
+    borderRadius:8, transition:"all 0.25s ease",
+    fontFamily:"'DM Sans',sans-serif", letterSpacing:"0.02em",
+    ...style,
+  };
+  if (variant==="primary") return (
+    <button onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} onClick={onClick}
+      style={{...base, background: hov ? accent : "transparent", color: hov ? "#050816" : accent,
+        border:`2px solid ${accent}`, boxShadow: hov ? `0 0 24px ${accent}55` : "none" }}>
+      {children}
+    </button>
+  );
+  if (variant==="solid") return (
+    <button onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} onClick={onClick}
+      style={{...base, background: hov ? `${accent}dd` : accent, color:"#050816",
+        boxShadow: hov ? `0 0 24px ${accent}66` : "none", transform: hov?"scale(1.02)":"scale(1)" }}>
+      {children}
+    </button>
+  );
+  return (
+    <button onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} onClick={onClick}
+      style={{...base, background: hov ? "rgba(255,255,255,0.06)" : "transparent",
+        color:"#94A3B8", border:"1px solid rgba(255,255,255,0.1)" }}>
+      {children}
+    </button>
+  );
+}
+
+// Animated counter
+function Counter({ value, label, icon }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(); const started = useRef(false);
+  const num = parseInt(value.replace(/\D/g,"")) || 0;
+  const suffix = value.replace(/[\d,]/g,"");
+  useEffect(()=>{
+    const ob = new IntersectionObserver(([e])=>{
+      if(e.isIntersecting && !started.current){
+        started.current=true;
+        let v=0; const step=num/60;
+        const t=setInterval(()=>{ v+=step; if(v>=num){setCount(num);clearInterval(t);}else setCount(Math.floor(v)); },20);
+      }
+    },{threshold:0.5});
+    if(ref.current) ob.observe(ref.current);
+    return()=>ob.disconnect();
+  },[num]);
+  return (
+    <div ref={ref} style={{textAlign:"center",padding:"1.5rem"}}>
+      <div style={{fontSize:"1.8rem",marginBottom:8}}>{icon}</div>
+      <div style={{fontFamily:"'Syne',sans-serif",fontSize:"clamp(2rem,4vw,3rem)",fontWeight:800,background:`linear-gradient(135deg,${T.green},${T.blue})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
+        {count.toLocaleString()}{suffix}
+      </div>
+      <div style={{color:T.muted,fontSize:"0.8rem",marginTop:6,letterSpacing:"0.05em"}}>{label}</div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATED CIRCUIT BACKGROUND
+═══════════════════════════════════════════════════════════════ */
+function CircuitBg() {
+  return (
+    <div style={{position:"fixed",inset:0,zIndex:0,pointerEvents:"none",overflow:"hidden"}}>
+      <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" style={{opacity:0.04}}>
+        {[100,220,340,460,580,700,820].map((y,i)=>(
+          <line key={i} x1="0" y1={y} x2="1440" y2={y} stroke={i%2===0?T.green:T.blue} strokeWidth="0.7" strokeDasharray={`${80+i*20} ${120+i*10}`}/>
+        ))}
+        {[80,200,320,440,560,680,800,920,1040,1160,1280,1400].map((x,i)=>(
+          <line key={i} x1={x} y1="0" x2={x} y2="900" stroke={i%3===0?T.green:T.blue} strokeWidth="0.7" strokeDasharray={`${60+i*10} ${90+i*8}`}/>
+        ))}
+        {[[80,100],[200,220],[440,100],[680,340],[920,220],[1160,460],[200,580],[440,700],[800,580],[1040,700]].map(([x,y],i)=>(
+          <g key={i}>
+            <circle cx={x} cy={y} r="5" fill={i%2===0?T.green:T.blue}/>
+            <circle cx={x} cy={y} r="10" fill="none" stroke={i%2===0?T.green:T.blue} strokeWidth="0.5" opacity="0.5"/>
+          </g>
+        ))}
+      </svg>
+      {/* Subtle gradient vignette */}
+      <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 60% at 50% 0%,rgba(0,255,102,0.04) 0%,transparent 70%)"}}/>
+      <div style={{position:"absolute",bottom:0,left:0,right:0,height:"40%",background:"linear-gradient(to top,#050816,transparent)"}}/>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════════════════════════ */
+function Navbar({ page, setPage }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(()=>{
+    const h=()=>setScrolled(window.scrollY>30);
+    window.addEventListener("scroll",h);
+    return()=>window.removeEventListener("scroll",h);
+  },[]);
+
+  const navigate = (p) => { setPage(p); setMobileOpen(false); window.scrollTo({top:0,behavior:"smooth"}); };
+
+  return (
+    <>
+      <style>{GLOBAL_CSS}</style>
+      <nav style={{
+        position:"fixed",top:0,left:0,right:0,zIndex:200,
+        background: scrolled ? "rgba(5,8,22,0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(24px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(0,255,102,0.08)" : "none",
+        transition:"all 0.4s ease",
+      }}>
+        <div style={{maxWidth:1320,margin:"0 auto",padding:"0 clamp(1rem,3vw,2.5rem)",display:"flex",alignItems:"center",height:68,gap:"2rem"}}>
+          {/* Logo */}
+          <button onClick={()=>navigate("Home")} style={{background:"none",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:10,flexShrink:0}}>
+            {/* Logo mark */}
+            <div style={{width:34,height:34,borderRadius:8,background:`linear-gradient(135deg,${T.green},${T.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1rem"}}>⚡</div>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:"1.1rem",letterSpacing:"0.04em"}}>
+              <span style={{color:T.green}}>PROJECT</span>
+              <span style={{color:T.white}}> SMITH</span>
+            </div>
+          </button>
+
+          {/* Desktop nav */}
+          <div className="hide-mobile" style={{display:"flex",gap:"1.75rem",alignItems:"center",flex:1,justifyContent:"center"}}>
+            {PAGES.map(p=>(
+              <button key={p} className={`nav-link${page===p?" active":""}`} onClick={()=>navigate(p)}>{p}</button>
+            ))}
+          </div>
+
+          {/* Right buttons */}
+          <div className="hide-mobile" style={{display:"flex",gap:12,alignItems:"center",flexShrink:0}}>
+            <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer"
+              style={{display:"flex",alignItems:"center",gap:6,padding:"9px 18px",borderRadius:8,background:"#25D366",color:"#fff",fontWeight:600,fontSize:"0.8rem",textDecoration:"none",letterSpacing:"0.02em"}}>
+              💬 WhatsApp
+            </a>
+            <Btn variant="solid" accent={T.green} onClick={()=>navigate("Courses")} style={{padding:"9px 22px"}}>Enroll Now →</Btn>
+          </div>
+
+          {/* Hamburger */}
+          <button className="hide-desktop" onClick={()=>setMobileOpen(!mobileOpen)}
+            style={{marginLeft:"auto",background:"none",border:"1px solid rgba(0,255,102,0.2)",borderRadius:8,color:T.green,width:38,height:38,display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",fontSize:"1.1rem"}}>
+            {mobileOpen?"✕":"☰"}
+          </button>
+        </div>
+
+        {/* Mobile drawer */}
+        {mobileOpen && (
+          <div style={{background:"rgba(5,8,22,0.98)",borderTop:"1px solid rgba(0,255,102,0.1)",padding:"1rem 2rem 2rem"}}>
+            {PAGES.map(p=>(
+              <button key={p} className={`nav-link${page===p?" active":""}`}
+                onClick={()=>navigate(p)}
+                style={{display:"block",width:"100%",textAlign:"left",padding:"0.75rem 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+                {p}
+              </button>
+            ))}
+            <div style={{display:"flex",gap:12,marginTop:"1.5rem"}}>
+              <Btn variant="solid" accent={T.green} onClick={()=>navigate("Courses")} style={{flex:1}}>Enroll Now</Btn>
+              <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer"
+                style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",gap:6,borderRadius:8,background:"#25D366",color:"#fff",fontWeight:600,fontSize:"0.85rem",textDecoration:"none"}}>
+                💬 WhatsApp
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
-      <a class="btn primary" href="#contact">WhatsApp</a>
-    </div>
-  </header>
+    </>
+  );
+}
 
-  <main class="hero container">
-    <div class="hero-grid">
-      <div>
-        <div class="eyebrow">Instagram-inspired • Dark • Premium</div>
-        <h1>Build.<br><span class="grad">Learn.</span><br>Innovate.</h1>
-        <p class="sub">Practical engineering for students.</p>
-        <div class="cta">
-          <a class="btn primary" href="#courses">Explore</a>
-          <a class="btn" href="#community">Join Community</a>
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: HOME
+═══════════════════════════════════════════════════════════════ */
+function HomePage({ setPage }) {
+  return (
+    <div>
+      {/* ── HERO ── */}
+      <section style={{minHeight:"100vh",display:"flex",alignItems:"center",padding:"100px clamp(1rem,4vw,3rem) 60px",position:"relative"}}>
+        {/* Glow blobs */}
+        <div style={{position:"absolute",top:"15%",left:"-5%",width:500,height:500,background:`radial-gradient(circle,${T.green}0D 0%,transparent 65%)`,borderRadius:"50%",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:"50%",right:"-8%",width:400,height:400,background:`radial-gradient(circle,${T.blue}0D 0%,transparent 65%)`,borderRadius:"50%",pointerEvents:"none"}}/>
+
+        <div style={{maxWidth:1320,margin:"0 auto",width:"100%",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"center"}}>
+          {/* Left */}
+          <div style={{animation:"fadeUp 0.7s ease forwards"}}>
+            <div style={{display:"inline-flex",alignItems:"center",gap:8,background:`${T.green}10`,border:`1px solid ${T.green}30`,borderRadius:100,padding:"5px 16px",marginBottom:28}}>
+              <span style={{width:6,height:6,borderRadius:"50%",background:T.green,display:"inline-block",animation:"blink 1.5s infinite"}}/>
+              <span style={{fontFamily:"'JetBrains Mono',monospace",color:T.green,fontSize:"0.7rem",letterSpacing:"0.12em"}}>INDIA'S #1 ENGINEERING PROJECT PLATFORM</span>
+            </div>
+
+            <h1 style={{fontFamily:"'Syne',sans-serif",fontSize:"clamp(2.8rem,6.5vw,5rem)",fontWeight:800,lineHeight:1,marginBottom:"1.5rem",letterSpacing:"-0.02em"}}>
+              BUILD.<br/>
+              <span style={{background:`linear-gradient(135deg,${T.green},${T.blue})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>LEARN.</span><br/>
+              INNOVATE.
+            </h1>
+
+            <p style={{fontSize:"clamp(1rem,1.8vw,1.15rem)",color:"#94A3B8",lineHeight:1.8,marginBottom:"2.5rem",maxWidth:480}}>
+              Master Arduino, ESP32, IoT, Robotics, and AI through hands-on projects. Real hardware. Real code. Real engineering.
+            </p>
+
+            <div style={{display:"flex",gap:14,flexWrap:"wrap",marginBottom:"3rem"}}>
+              <Btn variant="solid" accent={T.green} onClick={()=>setPage("Courses")} style={{padding:"14px 32px",fontSize:"1rem"}}>
+                🚀 Explore Courses
+              </Btn>
+              <Btn variant="primary" accent={T.blue} onClick={()=>setPage("About")} style={{padding:"14px 32px",fontSize:"1rem"}}>
+                Learn More →
+              </Btn>
+            </div>
+
+            {/* Tech stack badges */}
+            <div style={{display:"flex",flexWrap:"wrap",gap:10}}>
+              {["Arduino","ESP32","Raspberry Pi","STM32","IoT","ROS"].map(t=>(
+                <Badge key={t} text={t} color={T.muted.replace("64","94")}/>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Visual dashboard */}
+          <div className="hide-mobile" style={{position:"relative",height:520}}>
+            {/* Central hero card */}
+            <div style={{position:"absolute",left:"50%",top:"50%",transform:"translate(-50%,-50%)",width:260,zIndex:3,animation:"floatY 6s ease-in-out infinite"}}>
+              <Card accent={T.green} style={{padding:0,overflow:"hidden"}}>
+                <ImgPlaceholder label="ESP32 Smart Device Dashboard" aspect="70%" accent={T.green} emoji="📊"/>
+                <div style={{padding:"1rem"}}>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,marginBottom:4,fontSize:"0.9rem"}}>Smart IoT Dashboard</div>
+                  <div style={{display:"flex",alignItems:"center",gap:8}}>
+                    <span style={{width:6,height:6,borderRadius:"50%",background:T.green,display:"inline-block",animation:"blink 2s infinite"}}/>
+                    <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.7rem",color:T.green}}>LIVE · 34 students building</span>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Orbit cards */}
+            {[
+              {label:"Arduino",emoji:"⚡",color:T.green,x:-160,y:-120,delay:"0s"},
+              {label:"ESP32",emoji:"📡",color:T.blue,x:120,y:-140,delay:"1s"},
+              {label:"AI/ML",emoji:"🧠",color:T.purple,x:160,y:80,delay:"2s"},
+              {label:"Robotics",emoji:"🤖",color:T.amber,x:-150,y:100,delay:"0.5s"},
+            ].map(({label,emoji,color,x,y,delay})=>(
+              <div key={label} style={{position:"absolute",left:"50%",top:"50%",transform:`translate(calc(-50% + ${x}px),calc(-50% + ${y}px))`,zIndex:2,animation:`floatY 5s ease-in-out infinite`,animationDelay:delay}}>
+                <div style={{background:T.surface,border:`1px solid ${color}33`,borderRadius:12,padding:"10px 16px",display:"flex",flexDirection:"column",alignItems:"center",gap:6,boxShadow:`0 0 20px ${color}18`,minWidth:90}}>
+                  <span style={{fontSize:"1.4rem"}}>{emoji}</span>
+                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.65rem",color,letterSpacing:"0.05em"}}>{label}</span>
+                </div>
+              </div>
+            ))}
+
+            {/* Connection lines SVG */}
+            <svg style={{position:"absolute",inset:0,width:"100%",height:"100%",zIndex:1,opacity:0.2}} viewBox="0 0 500 520" preserveAspectRatio="xMidYMid meet">
+              {[[-160,-120],[120,-140],[160,80],[-150,100]].map(([x,y],i)=>(
+                <line key={i} x1="250" y1="260" x2={250+x} y2={260+y} stroke={[T.green,T.blue,T.purple,T.amber][i]} strokeWidth="1" strokeDasharray="4 4"/>
+              ))}
+            </svg>
+          </div>
         </div>
-        <div class="stats">
-          <div class="stat"><strong>500+</strong><span>Projects</span></div>
-          <div class="stat"><strong>100+</strong><span>Students</span></div>
-          <div class="stat"><strong>20+</strong><span>Categories</span></div>
-          <div class="stat"><strong>24/7</strong><span>Support</span></div>
+      </section>
+
+      {/* ── STATS ── */}
+      <section style={{padding:"3rem clamp(1rem,4vw,3rem)",position:"relative",zIndex:1}}>
+        <div style={{maxWidth:1320,margin:"0 auto"}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(180px,1fr))",gap:"1px",background:"rgba(0,255,102,0.07)",borderRadius:20,overflow:"hidden",border:"1px solid rgba(0,255,102,0.1)"}}>
+            {STATS.map((s,i)=>(
+              <div key={i} style={{background:T.surface,padding:"2rem",position:"relative"}}>
+                <Counter value={s.n} label={s.label} icon={s.icon}/>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FEATURED COURSES PREVIEW ── */}
+      <section style={{padding:"5rem clamp(1rem,4vw,3rem)",position:"relative",zIndex:1}}>
+        <div style={{maxWidth:1320,margin:"0 auto"}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3rem",flexWrap:"wrap",gap:16}}>
+            <SectionHead eyebrow="COURSES" title={<>Popular<br/>Courses</>} align="left"/>
+            <Btn variant="primary" accent={T.green} onClick={()=>setPage("Courses")}>View All Courses →</Btn>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1.5rem"}}>
+            {COURSES.slice(0,3).map(c=>(
+              <Card key={c.id} accent={c.accent} style={{overflow:"hidden"}}>
+                <ImgPlaceholder label={`${c.title} — Course Thumbnail`} accent={c.accent} emoji={c.emoji}/>
+                <div style={{padding:"1.5rem"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+                    <Badge text={c.tag} color={c.accent}/>
+                    <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:c.accent,fontSize:"1.1rem"}}>{c.price}</span>
+                  </div>
+                  <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"1.1rem",marginBottom:8}}>{c.title}</h3>
+                  <p style={{color:T.muted,fontSize:"0.82rem",lineHeight:1.6,marginBottom:16}}>{c.desc}</p>
+                  <div style={{display:"flex",gap:8,marginBottom:16}}>
+                    <span style={{background:"rgba(255,255,255,0.05)",borderRadius:6,padding:"3px 10px",fontSize:"0.72rem",color:"#94A3B8"}}>⏱ {c.duration}</span>
+                    <span style={{background:"rgba(255,255,255,0.05)",borderRadius:6,padding:"3px 10px",fontSize:"0.72rem",color:"#94A3B8"}}>👤 {c.students} students</span>
+                  </div>
+                  <Btn variant="primary" accent={c.accent} style={{width:"100%"}} onClick={()=>setPage("Courses")}>Enroll Now →</Btn>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── WHY ── */}
+      <section style={{padding:"5rem clamp(1rem,4vw,3rem)",background:"rgba(10,22,40,0.5)",position:"relative",zIndex:1}}>
+        <div style={{maxWidth:1320,margin:"0 auto"}}>
+          <SectionHead eyebrow="WHY US" title="Why Students Choose Project Smith" sub="Not another YouTube tutorial. A complete engineering education ecosystem."/>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1.25rem"}}>
+            {WHY.map(w=>(
+              <Card key={w.title} style={{padding:"1.75rem",display:"flex",gap:"1.25rem",alignItems:"flex-start"}}>
+                <div style={{width:48,height:48,borderRadius:12,background:`${T.green}12`,border:`1px solid ${T.green}25`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.4rem",flexShrink:0}}>{w.icon}</div>
+                <div>
+                  <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,marginBottom:6,fontSize:"0.95rem"}}>{w.title}</div>
+                  <div style={{color:T.muted,fontSize:"0.82rem",lineHeight:1.6}}>{w.body}</div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS PREVIEW ── */}
+      <section style={{padding:"5rem clamp(1rem,4vw,3rem)",position:"relative",zIndex:1}}>
+        <div style={{maxWidth:1320,margin:"0 auto"}}>
+          <SectionHead eyebrow="STUDENTS" title="What Students Say"/>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"1.25rem"}}>
+            {TESTIMONIALS.slice(0,3).map(t=>(
+              <Card key={t.name} style={{padding:"1.75rem"}}>
+                <Stars n={t.rating}/>
+                <p style={{color:"#CBD5E1",fontSize:"0.875rem",lineHeight:1.75,margin:"12px 0 16px",fontStyle:"italic"}}>"{t.text}"</p>
+                <div style={{display:"flex",alignItems:"center",gap:12}}>
+                  {/* Avatar placeholder */}
+                  <div style={{width:40,height:40,borderRadius:"50%",background:`linear-gradient(135deg,${T.green},${T.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:"0.9rem",color:"#050816",flexShrink:0}}>
+                    {t.name[0]}
+                  </div>
+                  <div>
+                    <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.875rem"}}>{t.name}</div>
+                    <div style={{color:T.muted,fontSize:"0.72rem"}}>{t.college} · {t.course}</div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA BANNER ── */}
+      <section style={{padding:"5rem clamp(1rem,4vw,3rem)",position:"relative",zIndex:1}}>
+        <div style={{maxWidth:900,margin:"0 auto"}}>
+          <div style={{background:`linear-gradient(135deg,${T.green}15,${T.blue}10)`,border:`1px solid ${T.green}25`,borderRadius:24,padding:"3.5rem 3rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
+            <div style={{position:"absolute",top:-40,right:-40,width:200,height:200,background:`radial-gradient(circle,${T.green}18,transparent)`,borderRadius:"50%"}}/>
+            <div style={{position:"absolute",bottom:-40,left:-40,width:160,height:160,background:`radial-gradient(circle,${T.blue}15,transparent)`,borderRadius:"50%"}}/>
+            <h2 style={{fontFamily:"'Syne',sans-serif",fontSize:"clamp(1.8rem,4vw,2.8rem)",fontWeight:800,marginBottom:16,position:"relative"}}>
+              Ready to build your first project?
+            </h2>
+            <p style={{color:T.muted,marginBottom:"2rem",fontSize:"1rem",lineHeight:1.7,maxWidth:500,margin:"0 auto 2rem",position:"relative"}}>
+              Join 1,200+ engineering students who have already shipped real projects and aced their college submissions.
+            </p>
+            <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",position:"relative"}}>
+              <Btn variant="solid" accent={T.green} onClick={()=>setPage("Courses")} style={{padding:"14px 36px",fontSize:"1rem"}}>Get Started Today</Btn>
+              <Btn variant="ghost" onClick={()=>setPage("Projects")} style={{padding:"14px 36px",fontSize:"1rem",border:"1px solid rgba(255,255,255,0.12)",color:"#94A3B8"}}>Browse Projects</Btn>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: COURSES
+═══════════════════════════════════════════════════════════════ */
+function CoursesPage() {
+  const [active, setActive] = useState(null);
+  return (
+    <div style={{paddingTop:100,minHeight:"100vh"}}>
+      <div style={{maxWidth:1320,margin:"0 auto",padding:"3rem clamp(1rem,4vw,3rem)"}}>
+        <SectionHead eyebrow="COURSES" title="Engineering Courses" sub="Practical, project-first courses designed for Indian BTech, Diploma, and school students."/>
+
+        <div style={{display:"flex",flexDirection:"column",gap:"2rem"}}>
+          {COURSES.map((c,i)=>(
+            <Card key={c.id} accent={c.accent} style={{overflow:"hidden"}}>
+              <div style={{display:"grid",gridTemplateColumns:"340px 1fr",gap:0}}>
+                {/* Thumbnail */}
+                <div style={{position:"relative"}}>
+                  <ImgPlaceholder label={`${c.title} — Course Preview`} aspect="100%" accent={c.accent} emoji={c.emoji}/>
+                  {/* Overlay badge */}
+                  <div style={{position:"absolute",top:16,left:16}}>
+                    <Badge text={c.tag} color={c.accent}/>
+                  </div>
+                </div>
+                {/* Content */}
+                <div style={{padding:"2rem"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:12,flexWrap:"wrap",gap:8}}>
+                    <h2 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:"1.5rem"}}>{c.title}</h2>
+                    <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:c.accent,fontSize:"1.8rem"}}>{c.price}</span>
+                  </div>
+                  <p style={{color:T.muted,lineHeight:1.75,marginBottom:20,fontSize:"0.9rem"}}>{c.desc}</p>
+
+                  <div style={{display:"flex",gap:24,marginBottom:20,flexWrap:"wrap"}}>
+                    {[["⏱",c.duration],["📊",c.level],["👥",`${c.students} enrolled`]].map(([ic,val])=>(
+                      <div key={val} style={{display:"flex",alignItems:"center",gap:6,color:"#94A3B8",fontSize:"0.8rem"}}>
+                        <span>{ic}</span><span>{val}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{marginBottom:20}}>
+                    <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.65rem",color:c.accent,letterSpacing:"0.1em",marginBottom:10}}>WHAT YOU'LL LEARN</div>
+                    <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                      {c.topics.map(tp=>(
+                        <span key={tp} style={{background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:6,padding:"4px 12px",fontSize:"0.78rem",color:"#CBD5E1"}}>✓ {tp}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Btn variant="solid" accent={c.accent} style={{padding:"12px 32px"}}>Enroll Now — {c.price}</Btn>
+                </div>
+              </div>
+            </Card>
+          ))}
         </div>
       </div>
+    </div>
+  );
+}
 
-      <div class="art">
-        <div class="glass g1">
-          <div class="chip">Live Lab</div>
-          <div class="dotline">⚡🤖</div>
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: PROJECTS
+═══════════════════════════════════════════════════════════════ */
+function ProjectsPage() {
+  const [filter, setFilter] = useState("All");
+  const tags = ["All","Arduino","ESP32","IoT","Robotics"];
+  return (
+    <div style={{paddingTop:100,minHeight:"100vh"}}>
+      <div style={{maxWidth:1320,margin:"0 auto",padding:"3rem clamp(1rem,4vw,3rem)"}}>
+        <SectionHead eyebrow="MARKETPLACE" title="Projects Marketplace" sub="Complete project kits with full documentation, circuit diagrams, and code — ready for college submission."/>
+
+        {/* Filter */}
+        <div style={{display:"flex",gap:10,justifyContent:"center",marginBottom:"3rem",flexWrap:"wrap"}}>
+          {tags.map(t=>(
+            <button key={t} onClick={()=>setFilter(t)}
+              style={{background:filter===t?T.green:"transparent",color:filter===t?"#050816":"#94A3B8",border:`1px solid ${filter===t?T.green:"rgba(255,255,255,0.1)"}`,borderRadius:8,padding:"8px 20px",fontWeight:600,fontSize:"0.8rem",cursor:"pointer",transition:"all 0.2s",fontFamily:"'DM Sans',sans-serif"}}>
+              {t}
+            </button>
+          ))}
         </div>
-        <div class="glass g2">
-          <strong>Projects</strong>
-          <p style="color:var(--muted);margin:8px 0 0">Hardware builds. Clean docs. Fast support.</p>
-        </div>
-        <div class="glass g3">
-          <strong>Brand</strong>
-          <p style="color:var(--muted);margin:8px 0 0">projectsmithlabs.in</p>
-        </div>
-      </div>
-    </div>
-  </main>
 
-  <section id="courses">
-    <div class="container">
-      <h2 class="title">Courses</h2>
-      <p class="desc">Short, premium learning paths.</p>
-      <div class="grid cards-4">
-        <article class="card">
-          <div class="thumb">🟩</div>
-          <h3>Arduino</h3>
-          <p>Beginner to advanced.</p>
-          <div class="meta"><span>6 Weeks</span><span class="price">₹999</span></div>
-          <a class="btn primary" href="#contact">Enroll</a>
-        </article>
-        <article class="card">
-          <div class="thumb">📶</div>
-          <h3>ESP32 & IoT</h3>
-          <p>Connected devices.</p>
-          <div class="meta"><span>8 Weeks</span><span class="price">₹1499</span></div>
-          <a class="btn primary" href="#contact">Enroll</a>
-        </article>
-        <article class="card">
-          <div class="thumb">🤖</div>
-          <h3>Robotics</h3>
-          <p>Motors and sensors.</p>
-          <div class="meta"><span>7 Weeks</span><span class="price">₹1299</span></div>
-          <a class="btn primary" href="#contact">Enroll</a>
-        </article>
-        <article class="card">
-          <div class="thumb">🧠</div>
-          <h3>AI + Embedded</h3>
-          <p>Future-ready skills.</p>
-          <div class="meta"><span>10 Weeks</span><span class="price">₹1999</span></div>
-          <a class="btn primary" href="#contact">Enroll</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="container">
-      <h2 class="title">Projects</h2>
-      <p class="desc">Popular student builds.</p>
-      <div class="grid cards-4">
-        <article class="card"><div class="thumb">💧</div><h3>Water Level</h3><p>Sensor-based monitoring.</p><a class="btn primary" href="#contact">Buy Now</a></article>
-        <article class="card"><div class="thumb">🔦</div><h3>Laser Security</h3><p>Simple perimeter safety.</p><a class="btn primary" href="#contact">Buy Now</a></article>
-        <article class="card"><div class="thumb">🏠</div><h3>RFID Lock</h3><p>Access control system.</p><a class="btn primary" href="#contact">Buy Now</a></article>
-        <article class="card"><div class="thumb">🌱</div><h3>Smart Irrigation</h3><p>Automated watering.</p><a class="btn primary" href="#contact">Buy Now</a></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="kits">
-    <div class="container">
-      <h2 class="title">Kits</h2>
-      <p class="desc">Starter packs for hands-on learning.</p>
-      <div class="grid cards-4">
-        <article class="card"><div class="thumb">🧰</div><h3>Arduino Kit</h3><p>Core components.</p><div class="meta"><span>Starter</span><span class="price">₹799</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
-        <article class="card"><div class="thumb">📡</div><h3>ESP32 Kit</h3><p>Wi-Fi projects.</p><div class="meta"><span>IoT</span><span class="price">₹1299</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
-        <article class="card"><div class="thumb">🚗</div><h3>Robotics Kit</h3><p>Build and test.</p><div class="meta"><span>Advanced</span><span class="price">₹1599</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
-        <article class="card"><div class="thumb">🔍</div><h3>Sensor Kit</h3><p>Learn modules fast.</p><div class="meta"><span>Multi-sensor</span><span class="price">₹999</span></div><a class="btn primary" href="#contact">Buy Now</a></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="about">
-    <div class="container">
-      <h2 class="title">Why Us</h2>
-      <p class="desc">Built for serious learners.</p>
-      <div class="features">
-        <div class="feature"><strong>Practical</strong><p>Learn by building.</p></div>
-        <div class="feature"><strong>Premium</strong><p>Clean, polished delivery.</p></div>
-        <div class="feature"><strong>Supported</strong><p>WhatsApp help.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="resources">
-    <div class="container">
-      <h2 class="title">Resources</h2>
-      <p class="desc">Free downloads.</p>
-      <div class="grid cards-5">
-        <article class="card"><h3>Arduino Notes</h3><a class="btn primary" href="#contact">Download</a></article>
-        <article class="card"><h3>ESP32 Notes</h3><a class="btn primary" href="#contact">Download</a></article>
-        <article class="card"><h3>Reports</h3><a class="btn primary" href="#contact">Download</a></article>
-        <article class="card"><h3>Diagrams</h3><a class="btn primary" href="#contact">Download</a></article>
-        <article class="card"><h3>Questions</h3><a class="btn primary" href="#contact">Download</a></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="community">
-    <div class="container">
-      <h2 class="title">Community</h2>
-      <p class="desc">Instagram. WhatsApp. YouTube. Discord.</p>
-      <div class="grid cards-4">
-        <article class="card"><h3>Instagram</h3><p>@project_smith_</p></article>
-        <article class="card"><h3>WhatsApp</h3><p>Daily support</p></article>
-        <article class="card"><h3>YouTube</h3><p>Build videos</p></article>
-        <article class="card"><h3>Discord</h3><p>Coming soon</p></article>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact">
-    <div class="container contact">
-      <div>
-        <h2 class="title">Contact</h2>
-        <p class="desc">hello@projectsmithlabs.in</p>
-        <div class="grid cards-3">
-          <div class="card"><strong>WhatsApp</strong><p style="color:var(--muted);margin-top:8px">Fast replies</p></div>
-          <div class="card"><strong>Email</strong><p style="color:var(--muted);margin-top:8px">hello@projectsmithlabs.in</p></div>
-          <div class="card"><strong>Instagram</strong><p style="color:var(--muted);margin-top:8px">@project_smith_</p></div>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:"1.5rem"}}>
+          {PROJECTS.map((p,i)=>(
+            <Card key={p.title} accent={p.color} style={{overflow:"hidden"}}>
+              <ImgPlaceholder label={`${p.title} — Circuit & Demo`} aspect="62%" accent={p.color} emoji={p.emoji}/>
+              <div style={{padding:"1.25rem"}}>
+                <Badge text={p.tag} color={p.color}/>
+                <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:700,margin:"10px 0 6px",fontSize:"1rem"}}>{p.title}</h3>
+                <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginTop:14}}>
+                  <span style={{fontFamily:"'Syne',sans-serif",fontWeight:800,color:p.color,fontSize:"1.2rem"}}>{p.price}</span>
+                  <Btn variant="primary" accent={p.color} small style={{padding:"7px 16px",fontSize:"0.78rem"}}>Buy Kit →</Btn>
+                </div>
+              </div>
+            </Card>
+          ))}
         </div>
       </div>
-      <div class="card">
-        <form class="form">
-          <input class="input" type="text" placeholder="Name" />
-          <input class="input" type="email" placeholder="Email" />
-          <input class="input" type="tel" placeholder="Phone" />
-          <textarea class="input" rows="5" placeholder="Message"></textarea>
-          <button class="btn primary" type="submit">Send</button>
-        </form>
-      </div>
     </div>
-  </section>
+  );
+}
 
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div>
-        <strong style="color:#fff;letter-spacing:.12em">PROJECT SMITH LABS</strong>
-        <div>Learn • Build • Innovate</div>
-      </div>
-      <div class="footer-links">
-        <a href="#courses">Courses</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: KITS
+═══════════════════════════════════════════════════════════════ */
+function KitsPage() {
+  return (
+    <div style={{paddingTop:100,minHeight:"100vh"}}>
+      <div style={{maxWidth:1320,margin:"0 auto",padding:"3rem clamp(1rem,4vw,3rem)"}}>
+        <SectionHead eyebrow="HARDWARE" title="DIY Hardware Kits" sub="Every component tested and verified. No counterfeit parts. Ships across India within 3 days."/>
+
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"2rem"}}>
+          {KITS.map((k,i)=>(
+            <Card key={k.title} accent={k.accent} style={{overflow:"hidden",display:"flex",flexDirection:"column"}}>
+              {/* Product image placeholder */}
+              <div style={{position:"relative"}}>
+                <ImgPlaceholder label={k.img_label} aspect="65%" accent={k.accent} emoji={k.emoji}/>
+                <div style={{position:"absolute",top:14,right:14}}>
+                  <Badge text={k.badge} color={k.accent}/>
+                </div>
+              </div>
+
+              <div style={{padding:"1.75rem",flex:1,display:"flex",flexDirection:"column"}}>
+                <h3 style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:"1.2rem",marginBottom:6}}>{k.title}</h3>
+                <div style={{fontFamily:"'Syne',sans-serif",color:k.accent,fontSize:"2rem",fontWeight:800,marginBottom:16}}>{k.price}</div>
+
+                <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20,flex:1}}>
+                  {k.features.map(f=>(
+                    <div key={f} style={{display:"flex",alignItems:"center",gap:10,fontSize:"0.82rem",color:"#94A3B8"}}>
+                      <span style={{color:k.accent,flexShrink:0}}>✓</span>{f}
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{display:"flex",gap:10}}>
+                  <Btn variant="solid" accent={k.accent} style={{flex:1}}>Buy Now →</Btn>
+                  <Btn variant="primary" accent={k.accent} style={{flex:0,padding:"12px 16px"}}>🛒</Btn>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Shipping info */}
+        <div style={{marginTop:"3rem",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}}>
+          {[
+            {icon:"🚀",label:"Pan-India Shipping",sub:"3–5 working days"},
+            {icon:"📦",label:"Secure Packaging",sub:"Bubble-wrapped & protected"},
+            {icon:"🔄",label:"Easy Returns",sub:"7-day return policy"},
+            {icon:"🛡️",label:"Genuine Components",sub:"Tested before dispatch"},
+          ].map(b=>(
+            <div key={b.label} style={{background:T.surface,border:"1px solid rgba(255,255,255,0.05)",borderRadius:12,padding:"1.25rem",display:"flex",gap:14,alignItems:"center"}}>
+              <span style={{fontSize:"1.5rem"}}>{b.icon}</span>
+              <div>
+                <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.875rem"}}>{b.label}</div>
+                <div style={{color:T.muted,fontSize:"0.75rem"}}>{b.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  </footer>
-</body>
-</html>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: RESOURCES
+═══════════════════════════════════════════════════════════════ */
+function ResourcesPage() {
+  return (
+    <div style={{paddingTop:100,minHeight:"100vh"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:"3rem clamp(1rem,4vw,3rem)"}}>
+        <SectionHead eyebrow="FREE" title="Free Learning Resources" sub="Download-ready notes, templates, and circuit libraries — no sign-up required."/>
+
+        <div style={{display:"flex",flexDirection:"column",gap:"1rem",marginBottom:"4rem"}}>
+          {RESOURCES.map(r=>(
+            <Card key={r.title} style={{padding:"1.5rem 2rem",display:"flex",alignItems:"center",gap:"1.5rem",flexWrap:"wrap"}}>
+              <div style={{width:52,height:52,borderRadius:12,background:`${r.color}12`,border:`1px solid ${r.color}25`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1.5rem",flexShrink:0}}>
+                {r.emoji}
+              </div>
+              <div style={{flex:1,minWidth:180}}>
+                <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"1rem",marginBottom:4}}>{r.title}</div>
+                <div style={{color:T.muted,fontSize:"0.8rem"}}>{r.sub}</div>
+              </div>
+              <div style={{display:"flex",alignItems:"center",gap:12,flexShrink:0}}>
+                <div style={{textAlign:"center"}}>
+                  <div style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.65rem",color:r.color,letterSpacing:"0.1em"}}>{r.type}</div>
+                  <div style={{color:T.muted,fontSize:"0.72rem"}}>{r.size}</div>
+                </div>
+                <Btn variant="primary" accent={r.color} style={{padding:"9px 20px",fontSize:"0.8rem"}}>⬇ Download</Btn>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Community section */}
+        <div style={{borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:"3rem"}}>
+          <SectionHead eyebrow="COMMUNITY" title="Join the Project Smith Community" sub="Connect, share projects, and get help from 1,200+ engineering students."/>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:"1.25rem"}}>
+            {[
+              {icon:"📸",label:"Instagram",sub:"Daily tips & projects",color:"#E1306C",href:"#"},
+              {icon:"💬",label:"WhatsApp Group",sub:"Get doubts solved fast",color:"#25D366",href:"#"},
+              {icon:"▶️",label:"YouTube",sub:"Free video tutorials",color:"#FF0000",href:"#"},
+              {icon:"🎮",label:"Discord",sub:"Coming soon",color:"#5865F2",href:"#"},
+            ].map(c=>(
+              <Card key={c.label} style={{padding:"2rem 1.25rem",textAlign:"center",display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
+                <span style={{fontSize:"2.2rem"}}>{c.icon}</span>
+                <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700}}>{c.label}</div>
+                <div style={{color:T.muted,fontSize:"0.75rem"}}>{c.sub}</div>
+                <a href={c.href} target="_blank" rel="noreferrer"
+                  style={{display:"inline-block",background:c.color,color:"#fff",borderRadius:8,padding:"9px 22px",fontWeight:700,fontSize:"0.8rem",textDecoration:"none",marginTop:4,transition:"opacity 0.2s"}}
+                  onMouseEnter={e=>e.target.style.opacity="0.85"} onMouseLeave={e=>e.target.style.opacity="1"}>
+                  Join Now
+                </a>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: ABOUT
+═══════════════════════════════════════════════════════════════ */
+function AboutPage({ setPage }) {
+  return (
+    <div style={{paddingTop:100,minHeight:"100vh"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:"3rem clamp(1rem,4vw,3rem)"}}>
+
+        {/* Hero */}
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"center",marginBottom:"5rem"}}>
+          <div>
+            <div style={{display:"inline-flex",alignItems:"center",gap:8,marginBottom:20}}>
+              <div style={{width:20,height:1,background:T.green}}/>
+              <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.7rem",color:T.green,letterSpacing:"0.2em"}}>ABOUT US</span>
+            </div>
+            <h1 style={{fontFamily:"'Syne',sans-serif",fontSize:"clamp(2rem,4vw,3.2rem)",fontWeight:800,lineHeight:1.1,marginBottom:"1.5rem"}}>
+              We bridge the gap between<br/>
+              <span style={{background:`linear-gradient(135deg,${T.green},${T.blue})`,WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>theory and hardware.</span>
+            </h1>
+            <p style={{color:T.muted,lineHeight:1.85,fontSize:"0.95rem",marginBottom:"1.5rem"}}>
+              Project Smith was born out of a simple frustration: Indian engineering students graduate knowing circuit theory but unable to build a working circuit. We fix that.
+            </p>
+            <p style={{color:T.muted,lineHeight:1.85,fontSize:"0.95rem",marginBottom:"2rem"}}>
+              We design every course, kit, and project around a single question: <em style={{color:T.white}}>"Can a student submit this tomorrow and be proud of it?"</em> If the answer is no, we redo it.
+            </p>
+            <Btn variant="solid" accent={T.green} onClick={()=>setPage("Courses")}>Start Learning Today</Btn>
+          </div>
+          <div>
+            <ImgPlaceholder label="Project Smith Team — Lab Setup" aspect="75%" accent={T.green} emoji="👨‍💻"/>
+          </div>
+        </div>
+
+        {/* Values */}
+        <SectionHead eyebrow="OUR VALUES" title="What We Stand For"/>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:"1.25rem",marginBottom:"5rem"}}>
+          {[
+            {icon:"🎯",title:"Practical First",body:"If it can't be built, we don't teach it."},
+            {icon:"🇮🇳",title:"Built for India",body:"Affordable prices, local shipping, curriculum aligned to Indian syllabi."},
+            {icon:"🔬",title:"Quality Hardware",body:"Every component is tested. We don't ship garbage."},
+            {icon:"🤝",title:"Real Support",body:"Real engineers answer your doubts. No bots."},
+          ].map(v=>(
+            <Card key={v.title} style={{padding:"1.75rem",textAlign:"center"}}>
+              <div style={{fontSize:"2rem",marginBottom:12}}>{v.icon}</div>
+              <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,marginBottom:8}}>{v.title}</div>
+              <div style={{color:T.muted,fontSize:"0.82rem",lineHeight:1.6}}>{v.body}</div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Team placeholder */}
+        <SectionHead eyebrow="TEAM" title="Meet the Team" sub="Engineers who actually build things."/>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(200px,1fr))",gap:"1.5rem"}}>
+          {[
+            {name:"Founder / Lead Engineer",role:"Arduino & IoT",emoji:"👨‍💻"},
+            {name:"Curriculum Designer",role:"Robotics & AI",emoji:"👨‍🔬"},
+            {name:"Hardware Specialist",role:"PCB & Kits",emoji:"🔧"},
+            {name:"Support Engineer",role:"Student Doubts",emoji:"🎓"},
+          ].map((m,i)=>(
+            <Card key={i} style={{overflow:"hidden",textAlign:"center"}}>
+              <ImgPlaceholder label={`${m.name} — Team Photo`} aspect="100%" accent={[T.green,T.blue,T.purple,T.amber][i]} emoji={m.emoji}/>
+              <div style={{padding:"1.25rem"}}>
+                <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.9rem",marginBottom:4}}>{m.name}</div>
+                <div style={{color:T.muted,fontSize:"0.75rem"}}>{m.role}</div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: CONTACT
+═══════════════════════════════════════════════════════════════ */
+function ContactPage() {
+  const [form, setForm] = useState({name:"",email:"",phone:"",subject:"",message:""});
+  const [sent, setSent] = useState(false);
+
+  const handle = (k,v) => setForm(p=>({...p,[k]:v}));
+  const submit = () => { if(form.name && form.email) setSent(true); };
+
+  const Field = ({label, k, type="text", placeholder, rows}) => (
+    <div>
+      <label style={{display:"block",color:"#94A3B8",fontSize:"0.75rem",marginBottom:6,letterSpacing:"0.05em",fontFamily:"'JetBrains Mono',monospace"}}>{label}</label>
+      {rows ? (
+        <textarea rows={rows} value={form[k]} onChange={e=>handle(k,e.target.value)} placeholder={placeholder}
+          style={{width:"100%",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 16px",color:T.white,fontSize:"0.9rem",outline:"none",resize:"vertical",fontFamily:"'DM Sans',sans-serif",transition:"border-color 0.2s",boxSizing:"border-box"}}
+          onFocus={e=>e.target.style.borderColor=T.green} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.08)"}/>
+      ) : (
+        <input type={type} value={form[k]} onChange={e=>handle(k,e.target.value)} placeholder={placeholder}
+          style={{width:"100%",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 16px",color:T.white,fontSize:"0.9rem",outline:"none",fontFamily:"'DM Sans',sans-serif",transition:"border-color 0.2s",boxSizing:"border-box"}}
+          onFocus={e=>e.target.style.borderColor=T.green} onBlur={e=>e.target.style.borderColor="rgba(255,255,255,0.08)"}/>
+      )}
+    </div>
+  );
+
+  return (
+    <div style={{paddingTop:100,minHeight:"100vh"}}>
+      <div style={{maxWidth:1100,margin:"0 auto",padding:"3rem clamp(1rem,4vw,3rem)"}}>
+        <SectionHead eyebrow="CONTACT" title="Get in Touch" sub="Have a question, a custom project request, or want to partner with us? We respond within 24 hours."/>
+
+        <div style={{display:"grid",gridTemplateColumns:"1fr 1.4fr",gap:"3rem",alignItems:"start"}}>
+          {/* Left: info */}
+          <div>
+            <Card style={{padding:"2rem",marginBottom:"1.5rem"}}>
+              <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"1rem",marginBottom:"1.5rem",color:T.green}}>Contact Info</div>
+              {[
+                {icon:"💬",label:"WhatsApp",val:"+91 99999 99999",color:"#25D366"},
+                {icon:"✉️",label:"Email",val:"hello@projectsmith.in",color:T.blue},
+                {icon:"📸",label:"Instagram",val:"@projectsmith.in",color:"#E1306C"},
+                {icon:"📍",label:"Location",val:"India (Online Platform)",color:T.muted},
+              ].map(c=>(
+                <div key={c.label} style={{display:"flex",gap:14,marginBottom:18,alignItems:"center"}}>
+                  <div style={{width:40,height:40,borderRadius:10,background:`${c.color}15`,border:`1px solid ${c.color}25`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1rem",flexShrink:0}}>{c.icon}</div>
+                  <div>
+                    <div style={{fontSize:"0.7rem",color:T.muted,fontFamily:"'JetBrains Mono',monospace",marginBottom:2}}>{c.label}</div>
+                    <div style={{fontSize:"0.875rem",color:T.white}}>{c.val}</div>
+                  </div>
+                </div>
+              ))}
+            </Card>
+
+            <Card style={{padding:"1.5rem"}}>
+              <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.95rem",marginBottom:12}}>Response Times</div>
+              {[["WhatsApp","< 30 min",T.green],["Email","< 24 hrs",T.blue],["Instagram DM","< 4 hrs","#E1306C"]].map(([ch,rt,c])=>(
+                <div key={ch} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderBottom:"1px solid rgba(255,255,255,0.04)"}}>
+                  <span style={{color:"#94A3B8",fontSize:"0.82rem"}}>{ch}</span>
+                  <Badge text={rt} color={c}/>
+                </div>
+              ))}
+            </Card>
+          </div>
+
+          {/* Right: form */}
+          <Card style={{padding:"2.5rem"}}>
+            {sent ? (
+              <div style={{textAlign:"center",padding:"3rem 0"}}>
+                <div style={{fontSize:"3rem",marginBottom:16}}>✅</div>
+                <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:"1.4rem",marginBottom:8}}>Message Sent!</div>
+                <div style={{color:T.muted}}>We'll get back to you within 24 hours.</div>
+                <Btn variant="primary" accent={T.green} style={{marginTop:24}} onClick={()=>setSent(false)}>Send Another</Btn>
+              </div>
+            ) : (
+              <div style={{display:"flex",flexDirection:"column",gap:"1.25rem"}}>
+                <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"1.1rem",marginBottom:4}}>Send a Message</div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1.25rem"}}>
+                  <Field label="YOUR NAME" k="name" placeholder="Rahul Sharma"/>
+                  <Field label="EMAIL" k="email" type="email" placeholder="rahul@example.com"/>
+                </div>
+                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1.25rem"}}>
+                  <Field label="PHONE" k="phone" type="tel" placeholder="+91 98765 43210"/>
+                  <div>
+                    <label style={{display:"block",color:"#94A3B8",fontSize:"0.75rem",marginBottom:6,letterSpacing:"0.05em",fontFamily:"'JetBrains Mono',monospace"}}>SUBJECT</label>
+                    <select value={form.subject} onChange={e=>handle("subject",e.target.value)}
+                      style={{width:"100%",background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:10,padding:"12px 16px",color:form.subject?T.white:"#64748B",fontSize:"0.9rem",outline:"none",fontFamily:"'DM Sans',sans-serif",cursor:"pointer",boxSizing:"border-box"}}>
+                      <option value="">Select topic</option>
+                      <option value="course">Course Enquiry</option>
+                      <option value="project">Custom Project</option>
+                      <option value="kit">Kit Order</option>
+                      <option value="support">Technical Support</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+                <Field label="MESSAGE" k="message" rows={5} placeholder="Describe your question or project requirement..."/>
+                <Btn variant="solid" accent={T.green} onClick={submit} style={{padding:"14px 0",width:"100%",fontSize:"1rem"}}>
+                  Send Message ✉️
+                </Btn>
+                <div style={{display:"flex",gap:10,justifyContent:"center"}}>
+                  {[["💬","WhatsApp","#25D366"],["✉️","Email",T.blue],["📸","Instagram","#E1306C"]].map(([ic,lab,col])=>(
+                    <button key={lab} style={{background:"transparent",border:`1px solid ${col}30`,borderRadius:8,color:col,padding:"8px 16px",cursor:"pointer",fontSize:"0.78rem",fontWeight:600,display:"flex",alignItems:"center",gap:6,transition:"background 0.2s"}}
+                      onMouseEnter={e=>e.currentTarget.style.background=col+"18"} onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                      {ic} {lab}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════════════════ */
+function Footer({ setPage }) {
+  const nav = (p) => { setPage(p); window.scrollTo({top:0,behavior:"smooth"}); };
+  return (
+    <footer style={{borderTop:"1px solid rgba(0,255,102,0.08)",padding:"4rem clamp(1rem,4vw,3rem) 2rem",position:"relative",zIndex:1,marginTop:"2rem"}}>
+      <div style={{maxWidth:1320,margin:"0 auto"}}>
+        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1.5fr",gap:"3rem",marginBottom:"3rem"}}>
+          {/* Brand */}
+          <div>
+            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:16}}>
+              <div style={{width:34,height:34,borderRadius:8,background:`linear-gradient(135deg,${T.green},${T.blue})`,display:"flex",alignItems:"center",justifyContent:"center",fontSize:"1rem"}}>⚡</div>
+              <div style={{fontFamily:"'Syne',sans-serif",fontWeight:800,fontSize:"1.1rem"}}>
+                <span style={{color:T.green}}>PROJECT</span>
+                <span style={{color:T.white}}> SMITH</span>
+              </div>
+            </div>
+            <p style={{color:T.muted,fontSize:"0.85rem",lineHeight:1.75,maxWidth:260,marginBottom:20}}>
+              Empowering future engineers through practical innovation. Building India's next generation of embedded systems engineers.
+            </p>
+            <div style={{display:"flex",gap:10}}>
+              {["📸","▶️","💬","💼"].map((s,i)=>(
+                <a key={i} href="#" style={{width:36,height:36,borderRadius:8,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.06)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.95rem",textDecoration:"none",transition:"all 0.2s"}}
+                  onMouseEnter={e=>{e.currentTarget.style.background=`${T.green}18`;e.currentTarget.style.borderColor=`${T.green}40`;}}
+                  onMouseLeave={e=>{e.currentTarget.style.background="rgba(255,255,255,0.04)";e.currentTarget.style.borderColor="rgba(255,255,255,0.06)";}}>
+                  {s}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Links */}
+          <div>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.875rem",marginBottom:16,color:T.white}}>Platform</div>
+            {PAGES.map(p=>(
+              <button key={p} onClick={()=>nav(p)} style={{display:"block",background:"none",border:"none",color:T.muted,cursor:"pointer",padding:"5px 0",fontSize:"0.825rem",textAlign:"left",transition:"color 0.2s",fontFamily:"'DM Sans',sans-serif"}}
+                onMouseEnter={e=>e.target.style.color=T.green} onMouseLeave={e=>e.target.style.color=T.muted}>{p}</button>
+            ))}
+          </div>
+
+          {/* Courses */}
+          <div>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.875rem",marginBottom:16,color:T.white}}>Courses</div>
+            {COURSES.map(c=>(
+              <div key={c.title} style={{color:T.muted,fontSize:"0.825rem",padding:"5px 0"}}>{c.title}</div>
+            ))}
+          </div>
+
+          {/* Contact + newsletter */}
+          <div>
+            <div style={{fontFamily:"'Syne',sans-serif",fontWeight:700,fontSize:"0.875rem",marginBottom:16,color:T.white}}>Stay Updated</div>
+            <p style={{color:T.muted,fontSize:"0.8rem",marginBottom:14,lineHeight:1.6}}>Get new projects, notes, and tips directly on WhatsApp.</p>
+            <a href="https://wa.me/919999999999" target="_blank" rel="noreferrer"
+              style={{display:"flex",alignItems:"center",gap:8,background:"#25D366",color:"#fff",borderRadius:10,padding:"12px 18px",fontWeight:700,fontSize:"0.875rem",textDecoration:"none",marginBottom:20}}>
+              💬 Join on WhatsApp
+            </a>
+            <div style={{color:T.muted,fontSize:"0.75rem",lineHeight:1.6}}>
+              📍 Pan-India Online Platform<br/>✉️ hello@projectsmith.in
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div style={{borderTop:"1px solid rgba(255,255,255,0.05)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:12}}>
+          <span style={{color:"#334155",fontSize:"0.78rem"}}>© 2025 Project Smith. All rights reserved.</span>
+          <div style={{display:"flex",gap:"1.5rem"}}>
+            {["Privacy Policy","Terms of Service","Refund Policy"].map(l=>(
+              <a key={l} href="#" style={{color:"#334155",fontSize:"0.78rem",textDecoration:"none",transition:"color 0.2s"}}
+                onMouseEnter={e=>e.target.style.color=T.green} onMouseLeave={e=>e.target.style.color="#334155"}>{l}</a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROOT APP
+═══════════════════════════════════════════════════════════════ */
+export default function App() {
+  const [page, setPage] = useState("Home");
+
+  // Reset scroll on page change
+  useEffect(() => { window.scrollTo({top:0,behavior:"smooth"}); }, [page]);
+
+  const renderPage = () => {
+    switch(page) {
+      case "Home":      return <HomePage setPage={setPage}/>;
+      case "Courses":   return <CoursesPage/>;
+      case "Projects":  return <ProjectsPage/>;
+      case "Kits":      return <KitsPage/>;
+      case "Resources": return <ResourcesPage/>;
+      case "About":     return <AboutPage setPage={setPage}/>;
+      case "Contact":   return <ContactPage/>;
+      default:          return <HomePage setPage={setPage}/>;
+    }
+  };
+
+  return (
+    <div style={{background:T.bg,minHeight:"100vh",color:T.white,position:"relative"}}>
+      <CircuitBg/>
+      <Navbar page={page} setPage={setPage}/>
+      <main style={{position:"relative",zIndex:1}}>
+        {renderPage()}
+      </main>
+      <Footer setPage={setPage}/>
+    </div>
+  );
+}
